@@ -1,38 +1,79 @@
-.App {
-  text-align: center;
+html body{
+  font-family: 'Yanone Kaffeesatz', sans-serif;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* .navbar.fix{
+  position: fixed;
+  width: 100%;
+} */
+.carousel-control-next-icon,.carousel-control-prev-icon{
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4IiB2aWV3Qm94PSIwIDAgNDYuMDIgNDYuMDIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQ2LjAyIDQ2LjAyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgY2xhc3M9IiI+PGc+PGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMTQuNzU3LDQ2LjAyYy0xLjQxMiwwLTIuODI1LTAuNTIxLTMuOTI5LTEuNTY5Yy0yLjI4Mi0yLjE3LTIuMzczLTUuNzgtMC4yMDQtOC4wNjNsMTIuNzU4LTEzLjQxOEwxMC42MzcsOS42NDUgICAgQzguNDYsNy4zNyw4LjU0LDMuNzYsMTAuODE2LDEuNTgyYzIuMjc3LTIuMTc4LDUuODg2LTIuMDk3LDguMDYzLDAuMTc5bDE2LjUwNSwxNy4yNTNjMi4xMDQsMi4yLDIuMTA4LDUuNjY1LDAuMDEzLDcuODcyICAgIEwxOC44OTMsNDQuMjQ3QzE3Ljc3LDQ1LjQyNCwxNi4yNjcsNDYuMDIsMTQuNzU3LDQ2LjAyeiIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgY2xhc3M9ImFjdGl2ZS1wYXRoIiBkYXRhLW9sZF9jb2xvcj0iIzAwMDAwMCIgZmlsbD0iI0ZGRkZGRiIvPgoJPC9nPgo8L2c+PC9nPiA8L3N2Zz4K');
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.carousel-control-prev-icon{
+  transform: rotate(180deg);
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.navbar-brand{
+  border-radius: 50%;
+}
+.navbar{
+  font-size: 1.3rem;
+}
+.dropdown-toggle::after{
+  display: none;
+}
+.dropdown-toggle img{
+  border-radius: 50%;
+}
+#dropdownMenuButton{
+  cursor: pointer;
+}
+.navbar-brand .dropdown-item{
+  cursor: auto;
+  margin: 0px;
+  padding: 8px;
+  border-bottom: 1px solid rgba(0,0,0,.15);
+}
+.navbar-brand .dropdown-item:last-child{
+  border-bottom: 0px;
+}
+.navbar-brand .dropdown-menu{
+  padding: 3px;
+}
+.carousel-caption{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.carousel-item{
+  height: 127px;
+}
+.center-align{
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+}
+.my-carousel{
+  background-color: #666666;
+  display: flex;
+}
+.my-carousel .carousel{
+  flex: 2;
+}
+.my-interest{
+  display: flex;
+  flex:1;
   color: white;
+  flex-direction: column;
 }
-
-.App-link {
-  color: #61dafb;
+.my-interest p,.carousel-caption p{
+  margin-bottom: 0px;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+.carousel-caption {
+  display: flex;
+  justify-content: space-around;
+}
+/* .carousel-caption img{
+  margin: 10px auto;
+} */
+@media (max-width: 992px){
+  .my-carousel {
+     display: block;
   }
 }
