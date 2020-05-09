@@ -22,7 +22,7 @@ function Carousal() {
                         <img src={reactjs} className="d-block " width="70" alt="..."/>
                         <div>
                             <h5>React JS</h5>
-                            <p>Implementing Single Page Applications (SPA)</p>
+                            <p>Implementing complex and Single Page Applications (SPA)</p>
                         </div>   
                       </div>
                   </div>
@@ -30,8 +30,8 @@ function Carousal() {
                     <div className="carousel-caption ">
                         <img src={js} className="d-block " width="70" alt="..."/>
                         <div>
-                            <h5>Front-end Technologies</h5>
-                            <p>Building and maintaining responsive websites using HTML, CSS, JavaScript</p>
+                            <h5>Others</h5>
+                            <p>JavaScript, HTML, CSS, jQuery, React Native, Redux</p>
                         </div>
                     </div>
                   </div>
