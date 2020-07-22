@@ -12,14 +12,14 @@ class Login extends Component {
     this.state = {
       loading: true,
       redirect: false,
-      internalError: false
+      internalError: false,
     };
   }
   async componentDidMount() {
     if(this.props.location && this.props.location.isRedirected){
       this.setState({
         loading: false,
-        redirect: false
+        redirect: false,
       });
     }else{
       const response = await apis.isLoggedIn();

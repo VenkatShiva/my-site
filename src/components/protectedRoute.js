@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Loading from './Loading';
 import Navbar from './Navbar';
 import Carousal  from './Carousal';
+import Portfolio from './Portfolio';
 import apis from './callApi';
 import {
     Redirect,
@@ -13,8 +14,22 @@ class ProtectedRoute extends Component {
     this.state = {
       loading: true,
       redirect: false,
-      internalError: false
+      internalError: false,
     };
+    this.logout = this.logout.bind(this);
+  }
+  async logout() {
+    const response = await apis.logout();
+    if( response.status === 200 ){
+      this.setState({
+        redirect: true,
+      });
+    }else{
+      // this.setState({
+      //   internalError: true
+      // })
+    }
+    return true;
   }
   async componentDidMount() {
     if(this.props.location && this.props.location.isRedirected){
@@ -55,13 +70,14 @@ class ProtectedRoute extends Component {
     if(redirect){
       return <Redirect to={{
         pathname: '/login',
-        isRedirected : true
+        isRedirected : true,
       }} />;
     }
     return (
       <div>
-        <Navbar/>
+        <Navbar logout={this.logout}/>
         <Carousal/>
+        <Portfolio />
       </div>
     );
   }

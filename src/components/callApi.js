@@ -21,7 +21,8 @@ function getConfig(method,data){
 }
 if(window.fetch){
     callService = async function(api = '/', method = 'GET' , data = {}){
-        const urlToCall = url + api;
+        // debugger;
+        const urlToCall = "/api"+api;
         const callConfig = getConfig(method, data);
         try{
             const response  = await fetch( urlToCall, callConfig );
@@ -54,7 +55,7 @@ if(window.fetch){
 }
 
 const callApi = function(url, method, data){
-    return callService(url, method,data);
+    return callService(url, method, data);
 }
 
 const isLoggedIn = async function(){
@@ -65,6 +66,12 @@ const isLoggedIn = async function(){
                 return {
                     status: 200,
                     login: true,
+                }
+            case 'tockenExpired':
+                return {
+                    status: 200,
+                    login: false,
+                    tockenExpired: true
                 }
             case 'unauthrized':
             default:
@@ -80,7 +87,31 @@ const isLoggedIn = async function(){
         }
     }
 }
+const logout = async () => {
+    const response =  await callApi('/auth/logout','GET');
+    if(response.status){
+        switch(response.result.result){
+            case 'loggedOut':
+                return {
+                    status: 200,
+                    logout: true,
+                }
+            default:
+                return {
+                    status: 200,
+                    logout: false,
+                }
+        }
+    }else{
+        return {
+            status: 502,
+            login: false
+        }
+    }
+}
+
 export default {
   callApi,
-  isLoggedIn
+  isLoggedIn,
+  logout
 }

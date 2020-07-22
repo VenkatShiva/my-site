@@ -6,9 +6,13 @@ import js from '../images/js.png';
 function Carousal() {
   return (
     <div id="profile" className="my-carousel center-align" >
+            <div className="my-interest center-align">
+              <h5>These are my strengths</h5>
+              <p>Also proficient in some javascript libraries</p>
+            </div>
             <div id="carouselExampleCaptions" className="carousel slide" data-ride="carousel">
                 <div className="carousel-inner">
-                  <div className="carousel-item active" data-interval="20000">
+                  <div className="carousel-item active" data-interval="15000">
                       <div className="carousel-caption ">
                         <img src={nodejs} className="d-block " width="70" alt="..."/>
                         <div>
@@ -17,7 +21,7 @@ function Carousal() {
                         </div>
                       </div>
                   </div>
-                  <div className="carousel-item" data-interval="20000">
+                  <div className="carousel-item" data-interval="15000">
                       <div className="carousel-caption ">
                         <img src={reactjs} className="d-block " width="70" alt="..."/>
                         <div>
@@ -26,7 +30,7 @@ function Carousal() {
                         </div>   
                       </div>
                   </div>
-                  <div className="carousel-item" data-interval="20000">
+                  <div className="carousel-item" data-interval="15000">
                     <div className="carousel-caption ">
                         <img src={js} className="d-block " width="70" alt="..."/>
                         <div>
@@ -45,10 +49,6 @@ function Carousal() {
                   <span className="sr-only">Next</span>
                 </a>
               </div>
-            <div className="my-interest center-align">
-              <h5>These are my strengths</h5>
-              <p>Also proficient in some javascript libraries</p>
-            </div>
         </div>
   );
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-function Loading() {
+function LoadingElement() {
   return (
     <div className="basic-elem center-mode fixed-loading">
       <svg aria-label="Loading" role="img" id="loading-anim" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55 20" preserveAspectRatio="xMidYMid meet" fill="#666666">
@@ -12,4 +12,4 @@ function Loading() {
   );
 }
 
-export default Loading;
+export default LoadingElement;
