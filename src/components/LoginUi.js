@@ -183,7 +183,7 @@ class LoginUi extends Component {
                   onBlur={this.validateEmail}
                   disabled= { this.state.emailEntered ? 'disabled': ''} >
                 </input>
-                <button className="btn btn-block my-2" type="submit" 
+                <button className="btn" type="submit" 
                   disabled={this.state.isvalid && !this.state.emailEntered ? '':'disabled'}
                   onClick={this.submitEmail}
                   style={{display: this.state.otpShow ? 'none':'block'}}
@@ -255,7 +255,7 @@ class LoginUi extends Component {
                   })
                 }
                 </div>
-                <button className="btn btn-block my-2" type="submit" 
+                <button className="btn" type="submit" 
                   disabled={this.state.otpEntered ? this.state.otpLoading ? 'disabled':'':'disabled'}
                   onClick={this.OTPSubmit}
                   id={this.state.otpLoading ? 'loading':''}

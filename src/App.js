@@ -8,6 +8,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect
 } from "react-router-dom";
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           <Route exact path="/login">
             <Login/>
           </Route>
+          <Redirect to="/" />
         </Switch>
        </Router>
        {/* <Toast toastList={testList}

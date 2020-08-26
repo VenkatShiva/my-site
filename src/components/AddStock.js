@@ -9,7 +9,8 @@ class AddStock extends Component {
         stockDate: new Date().toISOString().slice(0,10),
         selectedList:[],
         errMsg:'',
-        symbol:''
+        symbol:'',
+        keySelect: 0
     }
     onChangeHandler = (event) => {
         let { value, name } = event.target;
@@ -21,15 +22,17 @@ class AddStock extends Component {
             }
         }
         if(name === 'price' && value){
+            // debugger;
+            value = value.replace(/[^0-9.]/g,'')
             value = value.replace(/(\d*.)(.*)/, '$1') + value.replace(/(\d*.)(.*)/, '$2').replace(/\./g,'');
             // value = parseFloat(value);
             // value = parseFloat(value);
         }
         this.setState({ [name]: value });
     }
-    onChangeOfStockName = (event) => {
+    performStockSearch = (event)=>{
         const { stockList } = this.props;
-        const { value, name } = event.target;
+        const { value } = event.target;
         if(value){
             let selectedList = []; 
             stockList.map( (elem, _index ) => {
@@ -40,14 +43,29 @@ class AddStock extends Component {
                 return null;
             })
             this.setState({
-                [name]:value,
                 selectedList
             })
         }else{
             this.setState({
-                [name]:value,
                 selectedList:[]
             })
+        }
+    }
+    onChangeOfStockName = () => {
+        let debounceTimer;
+        // let callback = performStockSearch;
+        return (event) => {
+            const { value, name } = event.target;
+            this.setState({
+                [name]:value,
+                keySelect:0
+            });
+            event.persist();
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(()=>{
+                // debugger;
+                this.performStockSearch(event);
+            },500);
         }
     }
     onStockClick = (details) => {
@@ -113,6 +131,30 @@ class AddStock extends Component {
             errMsg:''
         })
     }
+    selectCompany = (event) => {
+        const { keyCode } = event;
+        const { keySelect, selectedList } = this.state;
+        switch(keyCode){
+            case 38:
+                event.preventDefault();
+                if(selectedList.length > 0 && keySelect > 1){
+                    this.setState({ keySelect: keySelect-1})
+                }
+                break
+            case 40:
+                if(selectedList.length > 0 && keySelect < selectedList.length){
+                    this.setState({ keySelect: keySelect+1})
+                }
+                break;
+            case 13:
+                if(keySelect > 0){
+                    const stockDetails = selectedList[keySelect-1];
+                    this.onStockClick({symbol:stockDetails['Symbol'],name:stockDetails['Company Name']})
+                }
+                break
+            default: return;
+        }
+    }
     render(){
         return (
             <div className="add-stock">
@@ -123,13 +165,14 @@ class AddStock extends Component {
                             type="text" 
                             autoComplete="off"
                             placeholder="Search Stock"
-                            onChange = {this.onChangeOfStockName}
+                            onChange = {this.onChangeOfStockName()}
                             onBlur = {this.onStockBlur}
                             onFocus = {this.onFocusOfInput}
-                            value={this.state.stockName}
+                            value = {this.state.stockName}
+                            onKeyDown = {this.selectCompany}
                             name="stockName"
                         />
-                        <MyDropdown selectedList={this.state.selectedList} onStockClick = {this.onStockClick}/>
+                        <MyDropdown selectedList={this.state.selectedList} keySelect={this.state.keySelect} onStockClick = {this.onStockClick}/>
                     </div>
                     <div>
                         <p>Enter Stock Quantity</p>

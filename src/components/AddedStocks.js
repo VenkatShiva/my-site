@@ -49,7 +49,7 @@ function AddedStock(props) {
                 totalAmount={totalAmount}
                 symbol={symbol}
                 index={index}
-                key={'addedstocks-'+index}
+                key={'addedstocks-'+ symbol +index}
             />)
             return null;
             

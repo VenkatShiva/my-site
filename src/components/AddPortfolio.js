@@ -11,7 +11,7 @@ class AddPortfolio extends Component{
         errMsg:'',
         loading:true,
         stockList:[
-            {name: 'HDFC Bank', isin: '121089'},
+            {name: 'HDFC Bank', Symbol: 'HDfCBANK'},
             {name: 'IDFC First Bank', isin: '121090'},
             {name: 'ICICI Bank', isin: '121091'},
             {name: 'City Union Bank', isin: '121092'},
@@ -41,13 +41,36 @@ class AddPortfolio extends Component{
             this.setState({errMsg:''})
         },2000)
     }
-    onSubmit = (event) => {
+    onSubmit = async (event) => {
         const isValid = this.verifyPortfolio();
         if(isValid === true){
             const { savePortfolio } = this.props;
             const allStocks = { ...this.state.stocks };
             const { portfolioName }= this.state;
-            savePortfolio({portfolioName, allStocks})
+            this.setState({
+                loading: true
+            });
+            // const savePortfolio = 
+            const backendDatabase = {
+                portfolioName,
+                stockList: []
+            };
+            for(let stock in allStocks){
+                const stockDetails = {
+                    symbol: stock,
+                    allStocks: allStocks[stock].allStocks.slice()
+                };
+                backendDatabase.stockList.push(stockDetails);
+            }
+            const savePortfolioResp = await apis.callApi('/data/saveportfolio', 'POST', backendDatabase);
+            // debugger;
+            if(savePortfolioResp.status){
+                savePortfolio({portfolioName, stockList:allStocks});
+            }else{
+                this.setState({
+                    loading: false
+                });
+            }
             // this.setErrorMsg('Enter valid Portfoio name.')
         } else {
             this.setErrorMsg(isValid);
@@ -85,7 +108,8 @@ class AddPortfolio extends Component{
         })
     }
     componentDidMount = async () => {
-        const stockResp = await apis.callApi('/data');
+        const stockResp = await apis.callApi('/data/allstocks');
+        // debugger;
         // console.log(stockResp);
         if(stockResp.status) {
             const { stocks } = stockResp.result;
@@ -100,6 +124,12 @@ class AddPortfolio extends Component{
             })
         }
     }
+    childClick = (event) => {
+        event.stopPropagation();
+    }
+    parentClick = (event) => {
+        this.onClancel(event);
+    }
     render(){
         // debugger;
         let addedStocks;
@@ -112,8 +142,8 @@ class AddPortfolio extends Component{
             addedStocks = null;
         }
         return (
-            <div className="add-portfolio" id={this.state.loading ? 'container-loading':''}>
-                <div className="portfolio-name">
+            <div className="add-portfolio" id={this.state.loading ? 'container-loading':''} onClick={this.parentClick}>
+                <div className="portfolio-name" onClick={this.childClick}>
                     <div className="name-heading">
                         <p>Enter Portfolio Name</p>
                         <input 

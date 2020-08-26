@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Transition, animated } from "react-spring/renderprops";
 import Loading from './Loading';
 import Navbar from './Navbar';
 import Carousal  from './Carousal';
@@ -73,12 +74,32 @@ class ProtectedRoute extends Component {
         isRedirected : true,
       }} />;
     }
+    let from = {opacity: 0}, enter= {opacity: 1}, leave = {opacity: 0};
     return (
-      <div>
-        <Navbar logout={this.logout}/>
-        <Carousal/>
-        <Portfolio />
-      </div>
+      <Transition
+        native
+        items= { true }
+        from= { from }
+        enter= { enter }
+        leave= { leave }
+        config = {{
+          duration: 1000
+        }}
+      >
+        { show =>
+          show && (
+            props => (
+              <animated.div 
+                style={ props }
+              > 
+                <Navbar logout={this.logout}/>
+                <Carousal/>
+                <Portfolio />
+              </animated.div>
+            )
+          )
+        }
+      </Transition>
     );
   }
 }
