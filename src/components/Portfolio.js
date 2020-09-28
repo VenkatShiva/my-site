@@ -91,10 +91,13 @@ class Portfolio extends Component{
                 //     }
                 //   },
             ],
-            addPortfolio: false
+            addPortfolio: false,
+            loading: true,
+            myportfolio:[]
         }
     }
     savePortfolio = (portfolio) => {
+        // debugger;
         this.setState(prevState => {
             const allPortfolios = prevState.portfolios.slice();
             allPortfolios.push(portfolio);
@@ -117,10 +120,11 @@ class Portfolio extends Component{
         // debugger;
         // console.log(stockResp);
         if(stockResp.status) {
-            const { portfolios } = stockResp.result;
+            const { portfolios, myportfolio } = stockResp.result;
             // console.log(stocks); stockList
             this.setState({
                 portfolios: portfolios,
+                myportfolio,
                 loading:false
             })
         } else {
@@ -151,7 +155,7 @@ class Portfolio extends Component{
                         </div>
                     </div>
                 </div>
-                <PortfolioComponent allPortfolios={this.state.portfolios}/>
+                <PortfolioComponent loading={this.state.loading}  allPortfolios={this.state.portfolios} myportfolio={this.state.myportfolio} />
                 { this.state.addPortfolio && <AddPortfolio closePortfolio={this.closePortfolio} savePortfolio={this.savePortfolio}/>}
             </div>
         )

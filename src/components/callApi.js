@@ -66,6 +66,7 @@ const isLoggedIn = async function(){
                 return {
                     status: 200,
                     login: true,
+                    email:response.result.email,
                 }
             case 'tockenExpired':
                 return {

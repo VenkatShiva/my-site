@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import ChartComponent from '../canvasjs/ChartComponent';
+import PieChartComponent from '../canvasjs/PieChartComponent';
+import LineChartComponet from '../canvasjs/lineChartComponent';
 
 const myFontFamily = "Yanone Kaffeesatz";
 const myColors = [
@@ -24,6 +25,143 @@ class PortfolioAnalysis extends Component{
             stocks: stocks.slice(),
             currentPrices: {...currentPrices}
          };
+    }
+    getLineChartConfig = () => {
+        const { stocks, currentPrices } = this.state;
+        const ivestmentDataPoints = [], returnsDataPoints = [], percentageReturn = [];
+        let totalIvestment = 0, totalReturns = 0;
+        const currentPricesLength = Object.keys(currentPrices).length;
+        let highestReturn = - Infinity, lowestReturn = Infinity, highIndex, lowIndex;
+        stocks.forEach(
+            (eachStock,index1) => {
+                let numberOfShares = 0;
+                const { allStocks, stock } = eachStock;
+                const { Symbol, 'Company Name': name } = stock;
+                let totalStockInvestment = 0;
+                let stockPresentValue = 0;
+                allStocks.forEach(
+                    (eachTime, index2) => {
+                        const { numberOfStocks, price } = eachTime;
+                        totalStockInvestment += parseInt(numberOfStocks) * parseFloat(price);
+                        numberOfShares += numberOfStocks;
+                    }
+                );
+                stockPresentValue = currentPricesLength > 0 ? parseFloat(currentPrices[Symbol]) * numberOfShares : totalStockInvestment;
+                ivestmentDataPoints.push( { label: name, y: parseFloat(totalStockInvestment.toFixed(2)) } );
+                returnsDataPoints.push( { label: name, y: parseFloat(stockPresentValue.toFixed(2)) } );
+                const percentage = ( stockPresentValue / totalStockInvestment - 1 ) * 100;
+                percentageReturn.push( { label: name, y: parseFloat(percentage.toFixed(2)) })
+                totalIvestment += totalStockInvestment;
+                totalReturns += stockPresentValue;
+                if(highestReturn < percentage){
+                    highIndex = index1;
+                    highestReturn = percentage;
+                }
+                if(lowestReturn > percentage){
+                    lowIndex = index1;
+                    lowestReturn = percentage;
+                }
+            }
+        );
+        percentageReturn[highIndex] = Object.assign(percentageReturn[highIndex], {  indexLabel: "Highest Returns", markerColor: "Green", markerType: "cross" });
+        percentageReturn[lowIndex] = Object.assign(percentageReturn[lowIndex], {  indexLabel: "Lowest Returns", markerColor: "Red", markerType: "cross" });
+        return {
+            animationEnabled: true,
+            exportEnabled: true,
+            // zoomEnabled:true,
+            // zoomType: "xy",
+            title:{
+                text: `Investment Vs Returns (${totalIvestment.toFixed(2)} - ${totalReturns.toFixed(2)})`,
+                fontFamily: myFontFamily,
+            },
+            axisX:{
+                labelFontFamily: myFontFamily,
+                title: 'Companies',
+                titleFontFamily: myFontFamily,
+            },
+            axisY:[{
+                title: 'Amount',
+                lineColor: myColors[0],
+                tickColor: myColors[0],
+                labelFontColor: myColors[0],
+                titleFontColor: myColors[0],
+                includeZero: true,
+                labelFontFamily: myFontFamily,
+                titleFontFamily: myFontFamily,
+                gridDashType: 'dash',
+                gridThickness: 1
+            },
+            // {
+            //     title: 'Returns',
+            //     lineColor: myColors[1],
+            //     tickColor: myColors[1],
+            //     labelFontColor: myColors[1],
+            //     titleFontColor: myColors[1],
+            //     includeZero: true,
+            //     labelFontFamily: myFontFamily,
+            //     titleFontFamily: myFontFamily,
+            //     gridDashType: 'dash',
+            //     gridThickness: 1
+            // }
+        ],
+            axisY2:{
+                title: 'Percentage',
+                lineColor: myColors[2],
+                tickColor: myColors[2],
+                labelFontColor: myColors[2],
+                titleFontColor: myColors[2],
+                includeZero: true,
+                labelFontFamily: myFontFamily,
+                titleFontFamily: myFontFamily,
+                gridDashType:'dash',
+                gridThickness: 0,
+                suffix: '%'
+            },
+            toolTip: {
+                shared: true,
+                fontFamily: myFontFamily,
+            },
+            legend: {
+                cursor: "pointer",
+                fontFamily: myFontFamily,
+            },
+            data: [
+            {
+                type: "line",
+                name: "Percentage",
+                color: myColors[2],
+                showInLegend: true,
+                axisYIndex: 0,
+                axisYType: "secondary",
+                dataPoints: percentageReturn,
+                lineDashType: "dash",
+                // fontFamily: myFontFamily,
+                indexLabelFontSize:15,
+            },
+            {
+                type: "line",
+                name: "Returns",
+                color: myColors[1],
+                showInLegend: true,
+                axisYIndex: 0,
+                // axisYType: "secondary",
+                dataPoints: returnsDataPoints,
+                // fontFamily: myFontFamily,
+                indexLabelFontSize:15,
+            },
+            {
+                type: "line",
+                name: "Investments",
+                color: myColors[0],
+                showInLegend: true,
+                axisYIndex: 1,
+                lineDashType: "dash",
+                dataPoints: ivestmentDataPoints,
+                // fontFamily: myFontFamily,
+                indexLabelFontSize:15,
+            },
+            ],
+        }
     }
     getDefaultConfig = (title, subtitle) => {
         // let toolTip = type === 'pie' ? "{name} {y} (#percent%)" : "{name} {y}"
@@ -96,7 +234,7 @@ class PortfolioAnalysis extends Component{
             }
         });
         const configWithData = this.getDefaultConfig('Investment', 'Invested: '+(totalAmount).toFixed(2), 'pie');
-        configWithData.data[0]['dataPoints']= investmentData
+        configWithData.data[0]['dataPoints']= investmentData;
         return configWithData;
     }
     getReturnsData = () => {
@@ -232,6 +370,8 @@ class PortfolioAnalysis extends Component{
         const returnsData = this.getReturnsData();
         const sectorData =  this.getSectorInvestmentData();
         const sectorReturns = this.getSectorReturnData();
+        const lineChartData = this.getLineChartConfig();
+        // debugger;
         const {openPortFolioAnalysis} = this.props;
         return (
             <div className="add-portfolio" onClick={this.parentClick}>
@@ -253,20 +393,25 @@ class PortfolioAnalysis extends Component{
                 <div className="analysis-containers">
                     <div className="portfolio-analysis-1">
                         <div>
-                            <ChartComponent options={investMentData} heading="Your Investment" needUpdateLater={false}/>
-                        </div>
-                        <p className="arrow-mark">➜</p>
-                        <div>
-                            <ChartComponent options={returnsData} heading="Your Investment Present Value" needUpdateLater={true}/>
+                            <LineChartComponet options={lineChartData} heading="Your Investment Vs Present Returns"/>
                         </div>
                     </div>
                     <div className="portfolio-analysis-1">
                         <div>
-                            <ChartComponent options={sectorData} heading="Industry" needUpdateLater={false}/>
+                            <PieChartComponent options={investMentData} heading="Your Investment" needUpdateLater={false}/>
                         </div>
                         <p className="arrow-mark">➜</p>
                         <div>
-                            <ChartComponent options={sectorReturns} heading="Industry returns" needUpdateLater={true}/>
+                            <PieChartComponent options={returnsData} heading="Your Investment Present Value" needUpdateLater={true}/>
+                        </div>
+                    </div>
+                    <div className="portfolio-analysis-1">
+                        <div>
+                            <PieChartComponent options={sectorData} heading="Industry" needUpdateLater={false}/>
+                        </div>
+                        <p className="arrow-mark">➜</p>
+                        <div>
+                            <PieChartComponent options={sectorReturns} heading="Industry returns" needUpdateLater={true}/>
                         </div>
                     </div>
                 </div>

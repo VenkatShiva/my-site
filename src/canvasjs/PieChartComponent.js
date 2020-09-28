@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CanvasJSReact from './canvasjs.react';
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-class ChartComponent extends Component {
+class PieChartComponent extends Component {
     state = {
         options:{},
         type: '',
@@ -85,4 +85,4 @@ class ChartComponent extends Component {
 	}
 }
 
-export default ChartComponent;
+export default PieChartComponent;

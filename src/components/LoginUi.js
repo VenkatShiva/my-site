@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import logo from '../images/logo.jpg';
 import LoadingElem from './LoadingElem';
 import apis from './callApi';
-import {
-  Redirect,
-} from "react-router-dom";
 // import apis from './callApi';
 class LoginUi extends Component {
   constructor() {
@@ -18,7 +15,6 @@ class LoginUi extends Component {
       otpShow: false,
       otp: Array(6).fill(''),
       otpLoading: false,
-      redirect: ''
     };
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.submitEmail = this.submitEmail.bind(this);
@@ -36,9 +32,11 @@ class LoginUi extends Component {
       const sendOtp = await apis.callApi('/auth/verify','POST', {email:this.state.email,otp: this.state.otp.join('')});
       if(sendOtp.status ===  true){
         if(sendOtp && sendOtp.result.result === true){
-          this.setState({
-            redirect:'/'
-          })
+          // this.setState({
+          //   redirect:'/'
+          // })
+          const { loginUser } = this.props;
+          loginUser(this.state.email);
         }else if(sendOtp && sendOtp.result){
           let warning = '';
           switch(sendOtp.result.reason){
@@ -96,9 +94,11 @@ class LoginUi extends Component {
     if(regEmail.status ===  true){
       if(regEmail.result && regEmail.result.result){
         if(regEmail.result.result === 'yes'){
-          this.setState({
-            redirect:'/'
-          })
+          // this.setState({
+          //   redirect:'/'
+          // })
+          const { loginUser } = this.props;
+          loginUser(this.state.email);
         }else if(regEmail.result.result === 'no'){
           if(regEmail.result.sent === true){
             let warning = '';
@@ -159,12 +159,6 @@ class LoginUi extends Component {
   }
   render() {
     const otpReference = Array(6).fill(null);
-    if(this.state.redirect){
-      return <Redirect to={{
-        pathname: '/',
-        isRedirected : true
-      }} />;
-    }
     return (
       <div className="login center-mode">
         <div className="login-box">

@@ -1,4 +1,4 @@
-import React,{ Component } from 'react';
+import React,{ Component, createRef } from 'react';
 import ViewmoreStock from './ViewmoreStock';
 
 class EachStack extends Component{
@@ -8,6 +8,7 @@ class EachStack extends Component{
         index:'',
         currentPrices:{}
     }
+    stockRef = createRef()
     static getDerivedStateFromProps = (newProps,_oldProps) => {
         const { elem, index, currentPrices } = newProps;
         // debugger;
@@ -17,11 +18,18 @@ class EachStack extends Component{
             currentPrices
          };
     }
-    onClickHandler = () => {
+    onClickHandler = (event) => {
+        // debugger;
         this.setState( prevState => {
             return {
                 opened: !prevState.opened
             }
+        });
+        setTimeout(()=>{
+            this.stockRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block:'nearest'
+            },0);
         })
     }
     render(){
@@ -59,9 +67,10 @@ class EachStack extends Component{
         // console.log(quantity, totalAmount, avgPrice, presentValue, profitOrLoss, percentage, isPositive);
         return (
             <div className="eachstock-container"
-                onClick={()=>{this.onClickHandler();}}
+                onClick={this.onClickHandler}
                 key={'portstock-'+index}
                 id={this.state.opened ? 'open-details':''}
+                ref={this.stockRef}
                 >
                 <div className="portfolio-each-stocks" key={"each-stock"+index}>
                     <div>
@@ -86,44 +95,44 @@ class EachStack extends Component{
                         </p>
                     </div>
                 </div>
-                <div className="stock-details">
-                    <div className="stock-details-header">
-                        <div style={{textAlign:'left', paddingLeft:'5px'}}>
-                            <p>
-                                Details
-                            </p>
-                        </div>
-                        <div>
-                            <p>
-                                Date
-                            </p>
-                        </div>
-                        <div>
-                            <p>
-                                Price
-                            </p>
-                        </div>
-                        <div>
-                            <p>
-                                Quantity
-                            </p>
-                        </div>
-                    </div>
-                    <div style={{display:'flex'}}>
-                        <div style={{flex:'1', paddingLeft:'5px'}}>
+                    <div className="stock-details">
+                        <div className="stock-details-header">
+                            <div style={{textAlign:'left', paddingLeft:'5px'}}>
+                                <p>
+                                    Details
+                                </p>
+                            </div>
                             <div>
                                 <p>
-                                    Symbol: {symbol} <br />
-                                    Industry: {industry} <br />
-                                    ISIN no: {isin} <br />
+                                    Date
+                                </p>
+                            </div>
+                            <div>
+                                <p>
+                                    Price
+                                </p>
+                            </div>
+                            <div>
+                                <p>
+                                    Quantity
                                 </p>
                             </div>
                         </div>
-                        <div style={{flex:'3'}}>
-                            {stockDetails}
+                        <div style={{display:'flex'}}>
+                            <div style={{flex:'1', paddingLeft:'5px'}}>
+                                <div>
+                                    <p>
+                                        Symbol: {symbol} <br />
+                                        Industry: {industry} <br />
+                                        ISIN no: {isin} <br />
+                                    </p>
+                                </div>
+                            </div>
+                            <div style={{flex:'3'}}>
+                                {stockDetails}
+                            </div>
                         </div>
                     </div>
-                </div>
             </div>
         )
     }
