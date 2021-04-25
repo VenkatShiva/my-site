@@ -12,9 +12,9 @@ class PortfolioComponent extends Component{
     static getDerivedStateFromProps = (newProps,_oldProps) => {
         // debugger;
         let { allPortfolios, loading, myportfolio } = newProps;
-        if(Object.keys(allPortfolios) <= 0 ){
+        //  if(Object.keys(allPortfolios) <= 0 ){
             // allPortfolios = 
-        }
+       //  }
         return { portfolios: Array.isArray(allPortfolios) ? allPortfolios : [], loading, myportfolio: Array.isArray(myportfolio) ? myportfolio : [] };
     }
     getPortfolios = (list, editable) => {
