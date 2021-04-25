@@ -22,7 +22,7 @@ function getConfig(method,data){
 if(window.fetch){
     callService = async function(api = '/', method = 'GET' , data = {}){
         // debugger;
-        const urlToCall = url + "/api"+api;
+        const urlToCall = url+api;
         const callConfig = getConfig(method, data);
         try{
             const response  = await fetchWithTimeout( urlToCall, callConfig );
