@@ -7,6 +7,7 @@ import ProtectedRoute from './components/protectedRoute';
 import Loading from './components/Loading';
 import HomePage from './components/HomePage';
 import Profile from './components/Profile/Profile.js';
+import Javascript from './components/javascript/Javascript';
 import Context from './contextProviders/emailProvider';
 import ToastMessage from './components/ToastMessage';
 // import Dummy,{ getRandomNumber } from './utils';
@@ -36,7 +37,11 @@ function App() {
         } else {
           setLog(false);
           setLoading('finish');
-          pushNotis('failure');
+          if(response.tockenExpired){
+            pushNotis('tokenExpired');
+          } else {
+            pushNotis('failure');
+          }
         }
       } else {
           setLog(false);
@@ -61,8 +66,11 @@ function App() {
         case 'failure':
           ToastContext.pushNotification({ msg:`Please login.`, type:"warning" });
           break;
-        case 'internal':
+        case 'internal'://tokenExpired
           ToastContext.pushNotification({ msg:`Internal Error..!`, type:"warning" });
+          break;
+        case 'tokenExpired':
+          ToastContext.pushNotification({ msg:`You got logged out login again.`, type:"warning" });
           break;
         default:
           break;
@@ -96,8 +104,9 @@ function App() {
       <MyContext.Provider value={{email:userEmail}}>
         <Router>
           <Switch>
-            <ProtectedRoute  exact path="/"  component={HomePage} isLoggedIn = {isLoggedin} logoutUser={logoutUser}/>
-            <ProtectedRoute exact path="/profile"  component={Profile} isLoggedIn = {isLoggedin} logoutUser={logoutUser}/>
+            <ProtectedRoute  exact path="/"  component={Profile} isLoggedIn = {isLoggedin} logoutUser={logoutUser}/>
+            <ProtectedRoute exact path="/interests"  component={HomePage} isLoggedIn = {isLoggedin} logoutUser={logoutUser}/>
+            <ProtectedRoute exact path="/javascript"  component={Javascript} isLoggedIn = {isLoggedin} logoutUser={logoutUser}/>
             <Route exact path="/login" >
               <Login isLoggedIn = {isLoggedin} loginUser = {loginUser} />
             </Route>
@@ -117,7 +126,6 @@ class AppWrapper extends Component{
     }
     return false;
   }
-
   render(){
     return (
       <>

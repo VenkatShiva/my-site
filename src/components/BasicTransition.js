@@ -1,17 +1,16 @@
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import { Transition, animated } from "react-spring/renderprops";
 
 class BasicTransaction extends Component {
   state = {
     height: null,
   }
-  animRef = createRef()
   height = undefined;
   //getSnapshotBeforeUpdate(prevProps, prevState)
   render() {
     // console.log('animref-->',this.animRef.current)
     // debugger;
-    const { children, duration, show } = this.props;
+    const { children, duration, show, className } = this.props;
     let from = {opacity: 0 }, enter= {opacity: 1}, leave = {opacity: 0};
     if(this.height){
       from.height = 0;
@@ -47,7 +46,7 @@ class BasicTransaction extends Component {
               props => (
                 <animated.div 
                   style={ props }
-                  className="no-overflow"
+                  className = {className}
                 > 
                   { children }
                 </animated.div>

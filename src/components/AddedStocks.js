@@ -117,7 +117,9 @@ function AddedStock(props) {
                             {/* </button> */}
                         </div>
                     </div>
-                    {StockList}
+                    <div className="listof-stocks">
+                        {StockList}
+                    </div>
             </div>
         )
     }

@@ -91,7 +91,7 @@ class EachStack extends Component{
                     <div>
                         <p>
                             <span>{profitOrLoss === '-' ? profitOrLoss : isPositive === true ? '+'+profitOrLoss : profitOrLoss}</span>
-                            <span style={{color:isPositive ===  null ? '' : isPositive ? '#0ba600':'#a60000'}}>{percentage === '-' ? "" : ' ('+percentage+'%)'}</span>
+                            <span style={{color:isPositive ===  null ? '' : isPositive ? '#0ba600':'red'}}>{percentage === '-' ? "" : ' ('+percentage+'%)'}</span>
                         </p>
                     </div>
                 </div>

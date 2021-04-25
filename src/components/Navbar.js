@@ -93,10 +93,12 @@ class Navbar extends Component {
     }
     const { path } = this.props.match;
     let currentPage = 'home';
-    if(path.indexOf('profile') > -1){
-      currentPage = 'profile';
+    if(path.indexOf('interests') > -1){
+      currentPage = 'interests';
     } else if(path.indexOf('contact') > -1){
       currentPage = 'contact';
+    } if(path.indexOf('javascript') > -1){
+      currentPage = 'javascript';
     }
     return (
       <>
@@ -133,14 +135,14 @@ class Navbar extends Component {
                             <Link className="mylinks" to="/">Home</Link>
                           </div>
                           <div
-                            className = { currentPage === 'profile' ? 'active': '' }
+                            className = { currentPage === 'interests' ? 'active': '' }
                           >
-                            <Link className="mylinks" to="/profile">Profile</Link>
+                            <Link className="mylinks" to="/interests">Interests</Link>
                           </div>
                           <div
-                            className = { currentPage === 'contact' ? 'active': '' }
+                            className = { currentPage === 'javascript' ? 'active': '' }
                           >
-                            <Link className="mylinks" to="/contact">Contact</Link>
+                            <Link className="mylinks" to="/javascript">JavaScript</Link>
                           </div>
                       </animated.div>
                     ))

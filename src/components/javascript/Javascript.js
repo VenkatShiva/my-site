@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import ProfileContent from './ProfileContent';
+import JavascriptContent from './JavascriptContent';
 import BasicTransaction from '../BasicTransition';
 
 
 class Profile extends Component {
   render() {
     return (
-        <BasicTransaction className="profile-page">
-            <ProfileContent />
+        <BasicTransaction >
+            <JavascriptContent />
         </BasicTransaction>
     );
   }

@@ -12,7 +12,10 @@ function ProtectedRoute(props) {
       return isLoggedIn === true ? 
       <>
       <Navbar logout={logoutUser} />
+      {/* <div> */}
       <Component /> 
+      {/* <Footer /> */}
+      {/* </div> */}
       </>
       : <Redirect to='/login' />
     }} />

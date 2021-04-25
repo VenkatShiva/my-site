@@ -1,9 +1,11 @@
 import React,{ Component } from 'react';
 import AddPortfolio from './AddPortfolio';
 import PortfolioComponent from './PortfolioComponent';
+import Context from '../contextProviders/emailProvider';
 import apis from './callApi';
 
 class Portfolio extends Component{
+    static contextType = Context.ToastContext;
     constructor(){
         super();
         this.state = {
@@ -96,16 +98,63 @@ class Portfolio extends Component{
             myportfolio:[]
         }
     }
-    savePortfolio = (portfolio) => {
-        // debugger;
+    deletePortfolio = (name, email) => {
         this.setState(prevState => {
-            const allPortfolios = prevState.portfolios.slice();
-            allPortfolios.push(portfolio);
-            return {
-                portfolios: allPortfolios,
-                addPortfolio: false
+            let portfolioIndex, allPortfolios;
+            if(email === 'avenkatashiva@gmail.com'){
+                portfolioIndex = prevState.myportfolio.findIndex( portfolio => portfolio.portfolioName === name);
+                allPortfolios = prevState.myportfolio.slice();
+                if(portfolioIndex > -1){
+                    allPortfolios.splice(portfolioIndex,1);
+                }
+                return {
+                    myportfolio: allPortfolios
+                }
+            } else {
+                portfolioIndex = prevState.portfolios.findIndex( portfolio => portfolio.portfolioName === name);
+                allPortfolios = prevState.portfolios.slice();
+                if(portfolioIndex > -1){
+                    allPortfolios.splice(portfolioIndex,1);
+                }
+                return {
+                    portfolios: allPortfolios
+                }
             }
-        })
+        });
+        if(this.context.pushNotification){
+            this.context.pushNotification({ msg:`Portfolio deleted successfully..`, type:"success" })
+        }
+    }
+    savePortfolio = (portfolio, email) => {
+        // debugger;
+        let allPortfolios;
+        this.setState(prevState => {
+            if(email === 'avenkatashiva@gmail.com'){
+                allPortfolios = prevState.myportfolio.slice();
+                allPortfolios.push(portfolio);
+                return {
+                    myportfolio: allPortfolios,
+                    addPortfolio: false
+                }
+            } else {
+                allPortfolios = prevState.portfolios.slice();
+                allPortfolios.push(portfolio);
+                return {
+                    portfolios: allPortfolios,
+                    addPortfolio: false
+                }
+            }
+        });
+        if(this.context.pushNotification){
+            this.context.pushNotification({ msg:`Portfolio added successfully..`, type:"success" })
+        }
+    }
+    isNameExist = (name) => {
+        const portfolioIndex = this.state.portfolios.findIndex( portfolio => portfolio.portfolioName === name);
+        if(portfolioIndex > -1){
+            return true;
+        }
+        return false;
     }
     addPortfolio = (event) => {
         if(!this.state.addPortfolio){
@@ -155,8 +204,8 @@ class Portfolio extends Component{
                         </div>
                     </div>
                 </div>
-                <PortfolioComponent loading={this.state.loading}  allPortfolios={this.state.portfolios} myportfolio={this.state.myportfolio} />
-                { this.state.addPortfolio && <AddPortfolio closePortfolio={this.closePortfolio} savePortfolio={this.savePortfolio}/>}
+                <PortfolioComponent loading={this.state.loading} deletePortfolio = {this.deletePortfolio}  allPortfolios={this.state.portfolios} myportfolio={this.state.myportfolio} />
+                { this.state.addPortfolio && <AddPortfolio closePortfolio={this.closePortfolio} savePortfolio={this.savePortfolio} isNameExist = {this.isNameExist}/>}
             </div>
         )
     }

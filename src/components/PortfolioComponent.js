@@ -23,6 +23,7 @@ class PortfolioComponent extends Component{
             return (
                 <PortfolioContent
                  editable = {editable}
+                 deletePortfolio = {this.props.deletePortfolio}
                  portfolio = {{...port}} key={'portfolio-content'+index}/>
             )
         })

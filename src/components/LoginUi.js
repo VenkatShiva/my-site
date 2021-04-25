@@ -117,10 +117,11 @@ class LoginUi extends Component {
           }
         }
       }
-      console.log(regEmail);
+      // console.log(regEmail);
     }else{
       this.setState({
-        warning:'Something went wrong, please try again'
+        warning:'Something went wrong, please try again',
+        emailEntered: false,
       })
     }
     // setTimeout(function(){

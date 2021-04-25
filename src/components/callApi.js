@@ -25,7 +25,7 @@ if(window.fetch){
         const urlToCall = "/api"+api;
         const callConfig = getConfig(method, data);
         try{
-            const response  = await fetch( urlToCall, callConfig );
+            const response  = await fetchWithTimeout( urlToCall, callConfig );
             if(response.ok){
                 return { status: true, result: await response.json() };
             }else{
@@ -110,7 +110,18 @@ const logout = async () => {
         }
     }
 }
-
+async function fetchWithTimeout(resource, options) {
+    const { timeout = 1000 * 30 } = options;
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+    const response = await fetch(resource, {
+        ...options,
+        signal: controller.signal  
+    });
+    clearTimeout(id);
+    return response;
+}
+  
 export default {
   callApi,
   isLoggedIn,

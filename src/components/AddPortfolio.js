@@ -3,8 +3,10 @@ import AddStock from './AddStock';
 import LoadingElement from './LoadingElem';
 import AddedStocks from './AddedStocks';
 import apis from './callApi';
+import Context from '../contextProviders/emailProvider';
 
 class AddPortfolio extends Component{
+    static contextType = Context.MyContext;
     state = {
         portfolioName: '',
         stocks:{},
@@ -28,6 +30,8 @@ class AddPortfolio extends Component{
     verifyPortfolio = () => {
         if(! this.state.portfolioName)
             return 'Please valid portfolio name';
+        else if(this.props.isNameExist(this.state.portfolioName))
+            return 'Portfolio Name already taken.'
         else if( Object.keys(this.state.stocks).length < 1){
             return 'Please add one stock atleast';
         }
@@ -65,7 +69,8 @@ class AddPortfolio extends Component{
             const savePortfolioResp = await apis.callApi('/data/saveportfolio', 'POST', backendDatabase);
             // debugger;
             if(savePortfolioResp.status){
-                savePortfolio({portfolioName, stockList:allStocks});
+                const { email: myEmail} = this.context;
+                savePortfolio({portfolioName, stockList:allStocks}, myEmail);
             }else{
                 this.setState({
                     loading: false
