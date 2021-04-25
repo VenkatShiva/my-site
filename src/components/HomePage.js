@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Portfolio from './Portfolio';
 import BasicTransaction from './BasicTransition';
-import FinancialLiteracy from './Interests/FinancialLiteracy'
+// import FinancialLiteracy from './Interests/FinancialLiteracy'
 
 class HomePage extends Component {
   render() {
@@ -9,7 +9,7 @@ class HomePage extends Component {
       <BasicTransaction>
           {/* <Navbar logout={logout}/> */}
           {/* <Carousal/> */}
-          <FinancialLiteracy />
+          {/*<FinancialLiteracy /> */}
           <Portfolio />
       </BasicTransaction>
     )
