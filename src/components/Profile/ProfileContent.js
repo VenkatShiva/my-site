@@ -10,7 +10,7 @@ import Footer from '../Footer';
 
 function ProtectedRoute(props) {
   const [ scrolledArea, setScrolledArea ] = useState('me');
-  const profession = 'A Full Stack Developer';
+  const profession = 'Full Stack Developer';
   let list = profession.split('').map((char,index)=><span key={'bounce'+index}
     style={{animationDelay:`${index/8}s`}}
   >{char}</span>);
@@ -133,8 +133,8 @@ function ProtectedRoute(props) {
           </p>
           <p className="know-heading">Who Am I</p>
           <p className="know-bio">
-            My name is <span style={{color:'white', fontSize:'1.1rem'}}>Venkat Shiva</span>. I'm a Full Stack Web Developer based Bangalore, India, and I'm very passionate and dedicated to my work.
-            With 1 years 10 months experience as a professional Full Stack Web Developer, I have acquired the skills necessary to build great and premium web applications.
+            I am <span style={{color:'white', fontSize:'1.1rem'}}>Venkat Shiva</span>. I'm a passionate Full Stack Developer based in Bangalore, India, and  dedicated to my work.
+            With 2 years 5 months of experience as a professional Full Stack Web Developer, I have acquired the skills necessary to build premium web applications.
             <br/><br/>
             I love to build web applications with React & Node. Proficient in JavaScript, HTML, CSS, React and modern JavaScript libraries and frameworks.
           </p>
@@ -166,18 +166,18 @@ function ProtectedRoute(props) {
             </div>
             <div className="tech-feild">
               <div className="tech-name">
-                React, Redux, React Native
+                React, Redux
               </div>
-              <div className="tech-rate" data-title={3.7}>
-                <StarRating rating={3.7}/>
+              <div className="tech-rate" data-title={4}>
+                <StarRating rating={4}/>
               </div>
             </div>
             <div className="tech-feild">
               <div className="tech-name">
                 Node JS, Express, MongoDB
               </div>
-              <div className="tech-rate" data-title={4}>
-                <StarRating rating={4}/>
+              <div className="tech-rate" data-title={3.5}>
+                <StarRating rating={3.5}/>
               </div>
             </div>
             <div className="tech-feild">
@@ -224,11 +224,13 @@ function ProtectedRoute(props) {
                   Core activities here:
                 </p>
                 <ul className="exp-activities">
-                  <li>Developing new CX, features and functionalities in chatbots</li>
-                  <li>Developing reusable React Components</li>
-                  <li>Managing Front-End code integrations and deployments</li>
-                  <li>Debugging and fixing issues</li>
-                  <li>More and more</li>
+                  <li>Creating new chatbots, and developing new features/functionalities in chatbots.</li>
+                  <li>Creating and developing new React components for the admin and fixing bugs.</li>
+                  <li>Writing cross-browser script and CSS to support all types of browsers and resolutions.</li>
+                  <li>Deploying code and integrating chatbot in client website and fixing cross-origin issues.</li>
+                  <li>Working with hybrid apps and debugging.</li>
+                  <li>Handling large data and controlling network requests.</li>
+                  <li>Developing Feedback internal site</li>
                 </ul>
               </div>
             </div>
@@ -255,7 +257,7 @@ function ProtectedRoute(props) {
                 </p>
                 <ul className="exp-activities">
                   <li>Developing web applications using Node, React, Express, MongoDB and MySQL</li>
-                  <li>Writing test cases Test Driven Development</li>
+                  <li>Writing test cases (Test Driven Development)</li>
                   <li>Debugging and fixing issues</li>
                   <li>Deploying projects in Amazon EC2</li>
                 </ul>
@@ -285,7 +287,7 @@ function ProtectedRoute(props) {
                 </p>
               </div>
               <div className="exp-summary">
-                <p>Bachelor degree from Rajiv Gandhi University of Knowledge and Science in the stream of Electronics and Communication Engineering(ECE).
+                <p>Bachelor degree from Rajiv Gandhi University of Knowledge Technologies in the stream of Electronics and Communication Engineering(ECE).
                   <br/>
                   CGPA : <span className="exp-duration"> 8.5 </span> / 10
                 </p>
@@ -308,7 +310,7 @@ function ProtectedRoute(props) {
                 </p>
               </div>
               <div className="exp-summary">
-                <p>Pre University Course from Rajiv Gandhi University of Knowledge and Science in the stream of M.P.C .
+                <p>Pre University Course from Rajiv Gandhi University of Knowledge Technologies in the stream of M.Bi.P.C.
                   <br/>
                   CGPA : <span className="exp-duration"> 8.4 </span> / 10
                 </p>
